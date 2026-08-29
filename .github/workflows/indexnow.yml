@@ -17,10 +17,10 @@ jobs:
   indexnow:
     runs-on: ubuntu-latest
     env:
-      INDEXNOW_HOST: www.milliyin.dev
+      INDEXNOW_HOST: milliyin.dev
       INDEXNOW_KEY: 46cdfe78b99f4d098a05bffc23759549
-      INDEXNOW_KEY_LOCATION: https://www.milliyin.dev/46cdfe78b99f4d098a05bffc23759549.txt
-      SITEMAP_URL: https://www.milliyin.dev/sitemap.xml
+      INDEXNOW_KEY_LOCATION: https://milliyin.dev/46cdfe78b99f4d098a05bffc23759549.txt
+      SITEMAP_URL: https://milliyin.dev/sitemap.xml
     steps:
       - name: Wait for deployment
         run: sleep 120
