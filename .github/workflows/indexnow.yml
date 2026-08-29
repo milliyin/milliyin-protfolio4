@@ -1,0 +1,82 @@
+name: Submit URLs to IndexNow
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - src/**
+      - public/**
+      - astro.config.mjs
+      - package.json
+      - package-lock.json
+  workflow_dispatch:
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    env:
+      INDEXNOW_HOST: www.milliyin.dev
+      INDEXNOW_KEY: 46cdfe78b99f4d098a05bffc23759549
+      INDEXNOW_KEY_LOCATION: https://www.milliyin.dev/46cdfe78b99f4d098a05bffc23759549.txt
+      SITEMAP_URL: https://www.milliyin.dev/sitemap.xml
+    steps:
+      - name: Wait for deployment
+        run: sleep 120
+
+      - name: Submit sitemap URLs to IndexNow
+        run: |
+          node <<'EOF'
+          const host = process.env.INDEXNOW_HOST;
+          const key = process.env.INDEXNOW_KEY;
+          const keyLocation = process.env.INDEXNOW_KEY_LOCATION;
+          const sitemapUrl = process.env.SITEMAP_URL;
+
+          function fail(message) {
+            console.error(`::error::${message}`);
+            process.exit(1);
+          }
+
+          async function main() {
+            const sitemapResponse = await fetch(sitemapUrl);
+            if (!sitemapResponse.ok) {
+              fail(`Could not fetch sitemap ${sitemapUrl}: HTTP ${sitemapResponse.status}`);
+            }
+
+            const sitemap = await sitemapResponse.text();
+            const urls = Array.from(sitemap.matchAll(/<loc>([^<]+)<\/loc>/g))
+              .map((match) => match[1].trim())
+              .filter((url) => {
+                try {
+                  return new URL(url).host === host;
+                } catch {
+                  return false;
+                }
+              });
+
+            if (urls.length === 0) {
+              fail(`No URLs for ${host} found in ${sitemapUrl}`);
+            }
+
+            const response = await fetch("https://api.indexnow.org/indexnow", {
+              method: "POST",
+              headers: { "Content-Type": "application/json; charset=utf-8" },
+              body: JSON.stringify({
+                host,
+                key,
+                keyLocation,
+                urlList: urls,
+              }),
+            });
+
+            const body = await response.text();
+            if (response.status < 200 || response.status >= 300) {
+              fail(`IndexNow returned HTTP ${response.status}: ${body}`);
+            }
+
+            console.log(`Submitted ${urls.length} URLs to IndexNow for ${host}.`);
+          }
+
+          main().catch((error) => fail(error.message));
+          EOF
