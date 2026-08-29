@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import NavBar from "@components/NavBar.astro";
 import Logo from "@components/Logo.astro";
 import { site } from "@/site";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 import "@fontsource/lilex";
 import "@fontsource/geist-sans";
@@ -71,5 +72,6 @@ const websiteStructuredData = {
         <main class="pt-16 pb-[50vh] w-11/12 md:w-3/4 lg:w-1/2 mx-auto">
             <slot />
         </main>
+        <SpeedInsights />
     </body>
 </html>
