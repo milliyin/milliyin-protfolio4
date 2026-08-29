@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import NavBar from "@components/NavBar.astro";
 import Logo from "@components/Logo.astro";
 import { site } from "@/site";
+import Analytics from "@vercel/analytics/astro";
 
 import "@fontsource/lilex";
 import "@fontsource/geist-sans";
@@ -56,6 +57,7 @@ const websiteStructuredData = {
         <meta name="author" content={site.fullName} />
         <link rel="canonical" href={pageUrl} />
         <title>{title}</title>
+        <Analytics />
         <ClientRouter />
         <script
             defer
