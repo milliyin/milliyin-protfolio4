@@ -4,6 +4,7 @@ import NavBar from "@components/NavBar.astro";
 import Logo from "@components/Logo.astro";
 import { site } from "@/site";
 import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 import "@fontsource/lilex";
 import "@fontsource/geist-sans";
@@ -58,6 +59,7 @@ const websiteStructuredData = {
         <link rel="canonical" href={pageUrl} />
         <title>{title}</title>
         <Analytics />
+        <SpeedInsights />
         <ClientRouter />
         <script
             defer
