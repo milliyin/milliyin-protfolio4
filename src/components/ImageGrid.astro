@@ -1,0 +1,21 @@
+---
+const tiles = [
+    { title: "Profile", detail: "Add your portrait", className: "row-span-2" },
+    { title: "Project", detail: "Showcase a featured build", className: "" },
+    { title: "Stack", detail: "Highlight your tools", className: "hidden md:block" },
+    { title: "About", detail: "A short personal note", className: "row-span-2" },
+    { title: "Contact", detail: "Email or socials", className: "hidden md:block md:row-span-2" },
+    { title: "Location", detail: "City or country", className: "" }
+];
+---
+
+<section class="grid grid-cols-2 md:grid-cols-3 grid-rows-3 gap-4">
+    {
+        tiles.map((tile) => (
+            <article class={`hero-image card ${tile.className}`}>
+                <h3 class="pt-0">{tile.title}</h3>
+                <p class="faded">{tile.detail}</p>
+            </article>
+        ))
+    }
+</section>

@@ -1,0 +1,149 @@
+---
+import { ClientRouter } from "astro:transitions";
+import NavBar from "@components/NavBar.astro";
+import Logo from "@components/Logo.astro";
+import { site } from "@/site";
+
+import "@fontsource/lilex";
+import "@fontsource/geist-sans";
+import "@fontsource/alice";
+import "../../src/global.css";
+
+interface Props {
+    title: string;
+    description: string;
+    contentType: "Projects" | "Blogs";
+    contentPath?: string;
+    ogImage?: string;
+    schemaType?: "Article" | "CreativeWork" | "SoftwareApplication" | "WebApplication";
+    appUrl?: string;
+    repoUrl?: string;
+    createdAt: Date;
+    updatedAt: Date;
+    wide?: boolean;
+}
+
+const {
+    title,
+    description,
+    contentType,
+    contentPath,
+    ogImage,
+    schemaType,
+    appUrl,
+    repoUrl,
+    createdAt,
+    updatedAt,
+    wide = false
+} = Astro.props;
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site);
+const contentUrl = new URL(contentPath ?? contentType.toLocaleLowerCase() + "/", Astro.site);
+const ogImageUrl = new URL(ogImage ?? site.defaultOgImage, Astro.site).toString();
+const resolvedSchemaType = schemaType ?? (contentType === "Projects" ? "CreativeWork" : "Article");
+const isArticle = resolvedSchemaType === "Article";
+
+const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+        {
+            "@type": "ListItem",
+            position: 1,
+            name: contentType,
+            item: contentUrl
+        },
+        {
+            "@type": "ListItem",
+            position: 2,
+            name: title,
+            item: pageUrl
+        }
+    ]
+};
+
+const authorStructuredData = {
+    "@type": "Person",
+    name: site.fullName,
+    alternateName: site.name,
+    jobTitle: site.role,
+    url: Astro.site
+};
+
+const contentStructuredData = isArticle
+    ? {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: title,
+          description,
+          datePublished: createdAt.toISOString(),
+          dateModified: updatedAt.toISOString(),
+          image: [ogImageUrl],
+          mainEntityOfPage: pageUrl,
+          author: authorStructuredData,
+          publisher: authorStructuredData
+      }
+    : {
+          "@context": "https://schema.org",
+          "@type": resolvedSchemaType,
+          name: title,
+          description,
+          image: [ogImageUrl],
+          url: appUrl ?? pageUrl,
+          mainEntityOfPage: pageUrl,
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Web",
+          creator: authorStructuredData,
+          author: authorStructuredData,
+          codeRepository: repoUrl,
+          sameAs: appUrl ? [appUrl] : undefined
+      };
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="/ava.jpg" type="image/jpeg" />
+        <link rel="icon" href="/ava.jpg" type="image/jpeg" />
+        <meta property="og:description" content={description} />
+        <meta property="og:site_name" content={site.name} />
+        <meta name="description" content={description} />
+        <meta property="og:type" content={isArticle ? "article" : "website"} />
+        <link rel="sitemap" href="/sitemap.xml" />
+        <meta property="og:title" content={title} />
+        <meta property="og:url" content={pageUrl} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImageUrl} />
+        <meta name="author" content={site.fullName} />
+        <link rel="canonical" href={pageUrl} />
+        <title>{title}</title>
+        <ClientRouter />
+        <script
+            defer
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(breadcrumbStructuredData)}
+        />
+        <script
+            defer
+            is:inline
+            type="application/ld+json"
+            set:html={JSON.stringify(contentStructuredData)}
+        />
+    </head>
+    <body class="max-w-7xl mx-auto">
+        <NavBar pathname={pageUrl.pathname}>
+            <Logo />
+        </NavBar>
+        <main class:list={[
+            "pt-16 pb-[50vh] w-11/12 md:w-3/4 mx-auto content-shell",
+            wide ? "lg:w-[44rem]" : "lg:w-1/2"
+        ]}>
+            <slot />
+        </main>
+    </body>
+</html>

@@ -1,0 +1,149 @@
+---
+interface LinkItem {
+    label: string;
+    href: string;
+    active: boolean;
+    event: string;
+}
+
+interface Props {
+    pathname: string;
+}
+
+const { pathname } = Astro.props;
+
+const links: LinkItem[] = [
+    {
+        label: "Home",
+        href: "/",
+        event: "link-home",
+        active: pathname === "/"
+    },
+    {
+        label: "Projects",
+        href: "/projects",
+        event: "link-projects",
+        active: pathname.includes("/projects")
+    },
+    {
+        label: "Skills",
+        href: "/skills",
+        event: "link-skills",
+        active: pathname.includes("/skills")
+    },
+    {
+        label: "Experience",
+        href: "/experience",
+        event: "link-experience",
+        active: pathname.includes("/experience")
+    },
+    {
+        label: "Blogs",
+        href: "/blog",
+        event: "link-blog",
+        active: pathname.includes("/blog") || pathname.includes("/posts")
+    },
+    {
+        label: "Education",
+        href: "/education",
+        event: "link-education",
+        active: pathname.includes("/education")
+    },
+    {
+        label: "Certs",
+        href: "/certifications",
+        event: "link-certifications",
+        active: pathname.includes("/certifications")
+    }
+];
+---
+
+<div class="fixed inset-x-0 top-5 bg-transparent">
+    <nav class="mx-auto flex w-[min(100%-1.5rem,46rem)] items-center gap-3 rounded-lg border border-zinc-200 bg-white p-2 md:gap-0 md:rounded-full">
+        <a class="w-full md:w-fit" data-umami-event="link-home" href="/">
+            <slot />
+        </a>
+
+        <ul class="hidden w-full justify-around md:flex">
+            {
+                links.map((link) => (
+                    <li>
+                        <a
+                            class:list={[
+                                "faded no-underline text-base hover:text-[#444444]",
+                                { "text-[#444444]": link.active }
+                            ]}
+                            data-umami-event={link.event}
+                            href={link.href}
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+
+        <button
+            class="block px-2 md:hidden"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            data-mobile-open
+        >
+            Menu
+        </button>
+    </nav>
+</div>
+
+<div class="fixed inset-0 hidden h-screen w-screen items-center backdrop-blur-lg" id="mobile-nav" data-mobile-overlay>
+    <nav class="relative mx-auto h-fit w-11/12 rounded-lg border border-zinc-200 bg-white py-10">
+        <button class="absolute right-0 top-0 p-5" type="button" data-mobile-close>
+            Close
+        </button>
+        <ul class="space-y-10 text-center">
+            {
+                links.map((link) => (
+                    <li>
+                        <a
+                            class:list={[
+                                "faded block no-underline text-base hover:text-[#444444]",
+                                { "text-[#444444]": link.active }
+                            ]}
+                            data-umami-event={link.event}
+                            href={link.href}
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+</div>
+
+<script is:inline>
+    const openButton = document.querySelector("[data-mobile-open]");
+    const closeButton = document.querySelector("[data-mobile-close]");
+    const overlay = document.querySelector("[data-mobile-overlay]");
+
+    if (openButton && closeButton && overlay) {
+        const setOpen = (open) => {
+            overlay.classList.toggle("hidden", !open);
+            overlay.classList.toggle("flex", open);
+            openButton.setAttribute("aria-expanded", String(open));
+            document.body.style.overflow = open ? "hidden" : "";
+        };
+
+        openButton.addEventListener("click", () => setOpen(true));
+        closeButton.addEventListener("click", () => setOpen(false));
+        overlay.addEventListener("click", (event) => {
+            if (event.target === overlay) setOpen(false);
+        });
+        overlay.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => setOpen(false));
+        });
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setOpen(false);
+        });
+    }
+</script>

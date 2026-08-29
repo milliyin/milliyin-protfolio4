@@ -1,0 +1,32 @@
+---
+import ProjectCard from "@components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import ListLayout from "@layouts/list.astro";
+import { site } from "@/site";
+
+const unsortedProjects = await getCollection("projects");
+
+const projects = unsortedProjects.sort(
+    (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+---
+
+<ListLayout
+    title={`${site.name} | Projects`}
+    description={site.sections.projects}
+    contentType="Projects"
+>
+    <header>
+        <h1>{`Personal Projects (${projects.length})`}</h1>
+        <p>{site.sections.projects}</p>
+    </header>
+    <ul class="space-y-4">
+        {
+            projects.map((project) => (
+                <li>
+                    <ProjectCard project={project} />
+                </li>
+            ))
+        }
+    </ul>
+</ListLayout>

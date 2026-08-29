@@ -1,0 +1,28 @@
+---
+import { site } from "@/site";
+---
+
+<div class="logo" aria-label={site.name}>
+    <img src="/ava.jpg" alt={`${site.name} avatar`} />
+</div>
+
+<style>
+    .logo {
+        align-items: center;
+        background: #fff;
+        border: 1px solid #e4e4e7;
+        border-radius: 999px;
+        display: flex;
+        height: 2rem;
+        justify-content: center;
+        overflow: hidden;
+        width: 2rem;
+    }
+
+    .logo img {
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
+</style>

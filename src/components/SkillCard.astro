@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    skill: CollectionEntry<"skills">;
+}
+
+const { skill } = Astro.props;
+
+let examples = "";
+
+skill.data.examples.forEach((example, index) => {
+    index == 0 ? (examples += example) : (examples += ", " + example);
+});
+---
+
+<article class="col-span-1 card">
+    <h4>{examples}</h4>
+    <p class="faded">{skill.data.title}</p>
+</article>

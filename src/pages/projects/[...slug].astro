@@ -1,0 +1,41 @@
+---
+import ProjectDetails from "@components/ProjectDetails.astro";
+import TableOfContents from "@components/TableOfContents.astro";
+import ContentLayout from "@layouts/content.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+    const allProjects = await getCollection("projects");
+
+    return allProjects.map((project) => ({
+        params: { slug: project.id },
+        props: { project }
+    }));
+}
+
+const { project } = Astro.props;
+const { Content, headings } = await render(project);
+---
+
+<ContentLayout
+    contentType="Projects"
+    title={project.data.metaTitle}
+    description={project.data.metaDescription}
+    ogImage={project.data.heroImage}
+    schemaType={project.data.site ? "WebApplication" : "CreativeWork"}
+    appUrl={project.data.site}
+    repoUrl={project.data.repo}
+    createdAt={project.data.createdAt}
+    updatedAt={project.data.createdAt}
+    wide={true}
+>
+    <ProjectDetails
+        title={project.data.title}
+        repo={project.data.repo}
+        site={project.data.site}
+    />
+    <TableOfContents headings={headings} />
+    <article class="space-y-4 content">
+        <Content />
+    </article>
+</ContentLayout>

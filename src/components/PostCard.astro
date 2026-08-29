@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { long } from "@utils/getDate";
+
+interface Props {
+    post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+---
+
+<article>
+    <a class="card" href={"/blog/" + post.id}>
+        <h4 class="card-title">{post.data.title}</h4>
+        <p class="faded">
+            <time datetime={post.data.createdAt.toISOString()}>
+                {long(post.data.createdAt)}
+            </time>
+        </p>
+    </a>
+</article>

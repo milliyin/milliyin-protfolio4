@@ -1,0 +1,31 @@
+---
+import PostCard from "@components/PostCard.astro";
+import { getCollection } from "astro:content";
+import ListLayout from "@layouts/list.astro";
+import { site } from "@/site";
+
+const unsortedPosts = await getCollection("posts");
+const posts = unsortedPosts.sort(
+    (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+---
+
+<ListLayout
+    title={`${site.name} | Blogs`}
+    description={site.sections.posts}
+    contentType="Blogs"
+>
+    <header>
+        <h1>{`Blogs (${posts.length})`}</h1>
+        <p>{site.sections.posts}</p>
+    </header>
+    <ul class="space-y-4">
+        {
+            posts.map((post) => (
+                <li>
+                    <PostCard post={post} />
+                </li>
+            ))
+        }
+    </ul>
+</ListLayout>

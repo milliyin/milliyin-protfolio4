@@ -1,0 +1,121 @@
+---
+import ExperienceCard from "@components/ExperienceCard.astro";
+import PostCard from "@components/PostCard.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import ImageGrid from "@components/ImageGrid.astro";
+import SkillCard from "@components/SkillCard.astro";
+import { getCollection } from "astro:content";
+import MainLayout from "@layouts/main.astro";
+import { site } from "@/site";
+
+const unsortedExperience = await getCollection("experience");
+const experience = unsortedExperience
+    .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime())
+    .slice(0, 3);
+
+const unsortedSkills = await getCollection("skills");
+const skills = unsortedSkills
+    .sort((a, b) => a.data.id - b.data.id)
+    .splice(0, 6);
+
+const topProjectOrder = [
+    "can-i-run-this-hugging-face-model",
+    "taskhive",
+    "flux-1-in-context-learning"
+];
+
+const unsortedProjects = await getCollection("projects");
+const projects = topProjectOrder
+    .map((slug) => unsortedProjects.find((project) => project.id === slug))
+    .filter(Boolean);
+
+const unsortedPosts = await getCollection("posts");
+const posts = unsortedPosts
+    .sort((a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime())
+    .slice(0, 3);
+---
+
+<MainLayout
+    title={site.title}
+    description={site.description}
+>
+    <header class="hero">
+        <h1>Hi, I'm Illiyin</h1>
+        <p>{site.intro}</p>
+    </header>
+
+    <ImageGrid />
+
+    <section class="space-y-4">
+        <h2>Top Projects</h2>
+        <p>{site.sections.projects}</p>
+        <ul class="space-y-4">
+            {
+                projects.map((project) => (
+                    <li>
+                        <ProjectCard project={project} />
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+
+    <section class="space-y-4">
+        <h2>My Skills</h2>
+        <p>{site.sections.skills}</p>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {
+                skills.map((skill) => (
+                    <li>
+                        <SkillCard skill={skill} />
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+
+    <section class="space-y-4">
+        <h2>Recent Experience</h2>
+        <p>{site.sections.experience}</p>
+        <ul class="space-y-4">
+            {
+                experience.map((exp) => (
+                    <li>
+                        {" "}
+                        <ExperienceCard experience={exp} />
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+
+    <section class="space-y-4">
+        <h2>Recent Blogs</h2>
+        <p>{site.sections.posts}</p>
+        <ul class="space-y-4">
+            {
+                posts.map((post) => (
+                    <li>
+                        <PostCard post={post} />
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+
+    <section class="space-y-4">
+        <h2>Contact</h2>
+        <p>Want to collaborate, build something, or talk about AI and software? Reach out here.</p>
+        <div class="card space-y-3">
+            <p>
+                <a href="mailto:illiyindesigns@gmail.com">illiyindesigns@gmail.com</a>
+            </p>
+            <p>
+                <a href="https://github.com/milliyin" target="_blank" rel="noreferrer">GitHub</a>
+            </p>
+            <p>
+                <a href="https://www.linkedin.com/in/illiyin/" target="_blank" rel="noreferrer">LinkedIn</a>
+            </p>
+        </div>
+    </section>
+</MainLayout>

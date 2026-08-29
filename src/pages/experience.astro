@@ -1,0 +1,28 @@
+---
+import ExperienceDetails from "@components/ExperienceDetails.astro";
+import { getCollection } from "astro:content";
+import ListLayout from "@layouts/list.astro";
+import { site } from "@/site";
+
+const unsortedExperience = await getCollection("experience");
+
+const experience = unsortedExperience.sort(
+    (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
+);
+---
+
+<ListLayout
+    title={`${site.name} | Experience`}
+    description={site.sections.experience}
+    contentType="Experience"
+>
+    <header>
+        <h1>Work And Experience</h1>
+        <p>{site.sections.experience}</p>
+    </header>
+    {
+        experience.map((experience) => (
+            <ExperienceDetails experience={experience} />
+        ))
+    }
+</ListLayout>

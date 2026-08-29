@@ -1,0 +1,32 @@
+---
+import ListLayout from "@layouts/list.astro";
+import { certifications, site } from "@/site";
+---
+
+<ListLayout
+    title={`${site.name} | Certifications`}
+    description={site.sections.certifications}
+    contentType="Certifications"
+>
+    <header>
+        <h1>Licenses & Certifications</h1>
+        <p>{site.sections.certifications}</p>
+    </header>
+
+    <section class="space-y-4">
+        {
+            certifications.map((item) => (
+                <article class="card">
+                    <h4>{item.title}</h4>
+                    <p class="faded">{item.issuer}</p>
+                    <p class="faded">Issued {item.issued}</p>
+                    <p class="faded">Credential ID {item.credentialId}</p>
+                    <p>{item.skills.join(", ")}</p>
+                    <p>
+                        <a href={item.credentialUrl} target="_blank">Show credential</a>
+                    </p>
+                </article>
+            ))
+        }
+    </section>
+</ListLayout>

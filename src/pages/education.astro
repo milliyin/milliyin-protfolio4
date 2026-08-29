@@ -1,0 +1,28 @@
+---
+import ListLayout from "@layouts/list.astro";
+import { education, site } from "@/site";
+---
+
+<ListLayout
+    title={`${site.name} | Education`}
+    description={site.sections.education}
+    contentType="Education"
+>
+    <header>
+        <h1>Education</h1>
+        <p>{site.sections.education}</p>
+    </header>
+
+    <section class="space-y-4">
+        {
+            education.map((item) => (
+                <article class="card">
+                    <h4>{item.school}</h4>
+                    <p class="faded">{item.degree} · {item.field}</p>
+                    <p class="faded">{item.start} - {item.end}</p>
+                    <p>{item.notes.join(", ")}</p>
+                </article>
+            ))
+        }
+    </section>
+</ListLayout>

@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import { short } from "@utils/getDate";
+
+interface Props {
+    experience: CollectionEntry<"experience">;
+}
+
+const { experience } = Astro.props;
+const { data } = experience;
+
+const { Content } = await render(experience);
+
+const startDate = short(data.startDate);
+---
+
+<h2 id={experience.id} class="first-of-type:pt-0">{data.shortTitle}</h2>
+
+<hr />
+
+<div class="flex flex-col md:flex-row justify-between">
+    <p>{data.type} @ {data.company}</p>
+    <p>
+        <time datetime={data.startDate.toISOString()}>
+            {startDate}
+        </time>
+        -
+        {
+            data.present ? (
+                <span>Present</span>
+            ) : (
+                <time datetime={data.endDate.toISOString()}>
+                    {short(data.endDate)}
+                </time>
+            )
+        }
+    </p>
+</div>
+
+<article class="experience-copy">
+    <Content />
+</article>
+
+<style>
+    .experience-copy {
+        margin-top: 1rem;
+    }
+
+    .experience-copy :global(ul) {
+        list-style: disc;
+        margin: 0 0 1.25rem 1.5rem;
+        padding: 0;
+    }
+
+    .experience-copy :global(li) {
+        margin-bottom: 0.5rem;
+    }
+
+    .experience-copy :global(p) {
+        margin-bottom: 1rem;
+    }
+</style>

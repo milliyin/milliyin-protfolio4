@@ -1,0 +1,219 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html,
+    body {
+        @apply scroll-smooth text-[#444444] bg-white underline-offset-[3px];
+        font-family: "Geist Sans", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        scroll-padding-top: 70px;
+    }
+
+    a {
+        @apply underline;
+    }
+
+    main {
+        @apply space-y-4 text-base md:text-lg;
+    }
+
+    h1,
+    h2,
+    h3 {
+        @apply text-black font-bold;
+        font-family: "Alice", serif;
+    }
+
+    h1 {
+        @apply text-3xl md:text-4xl tracking-normal leading-none;
+    }
+
+    h2 {
+        @apply text-2xl md:text-3xl pt-5;
+    }
+
+    h3 {
+        @apply text-xl md:text-2xl pt-5;
+    }
+
+    header {
+        @apply my-12 space-y-2;
+    }
+
+    .content {
+        @apply mx-auto text-[1rem] md:text-[1.05rem] leading-8;
+
+        li {
+            @apply list-disc ml-5;
+        }
+    }
+
+    hr {
+        @apply border-zinc-200;
+    }
+
+    img {
+        @apply rounded-lg block max-w-full;
+    }
+
+    img[src$=".svg"] {
+        @apply rounded-none mx-auto;
+    }
+
+    iframe {
+        @apply rounded-lg w-full aspect-[16/10];
+    }
+
+    code {
+        @apply bg-zinc-100 px-2 rounded-lg inline-block text-sm;
+        font-family: "Lilex", monospace;
+    }
+
+    blockquote {
+        @apply bg-zinc-100 text-center rounded-lg p-2 italic font-serif;
+    }
+
+    details > summary {
+        list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+
+    pre {
+        @apply bg-zinc-100 p-2 rounded-lg;
+
+        code {
+            @apply bg-transparent;
+        }
+    }
+
+    table {
+        @apply w-full text-left border-separate;
+        border-spacing: 0;
+
+        th {
+            @apply p-2 font-normal bg-zinc-100 border border-zinc-200;
+        }
+
+        td {
+            @apply p-2 border border-zinc-200 border-t-0;
+        }
+
+        tr:first-child th:first-child {
+            @apply rounded-tl-lg;
+        }
+
+        tr:first-child th:last-child {
+            @apply rounded-tr-lg;
+        }
+
+        tr:last-child td:first-child {
+            @apply rounded-bl-lg;
+        }
+
+        tr:last-child td:last-child {
+            @apply rounded-br-lg;
+        }
+    }
+
+    mjx-container {
+        @apply bg-zinc-100 rounded-lg p-4 text-base inline-flex;
+
+        svg {
+            @apply mx-auto;
+        }
+    }
+}
+
+@layer components {
+    .hero-image {
+        @apply col-span-1 object-cover w-full h-full object-top;
+    }
+
+    .card {
+        @apply px-4 py-2 border border-zinc-200 rounded-md flex flex-col no-underline;
+    }
+
+    .card-title {
+        @apply text-base md:text-[1.05rem] leading-snug font-medium;
+    }
+
+    .card-copy {
+        @apply text-[0.95rem] leading-7;
+    }
+
+    .faded {
+        @apply text-[#767676];
+    }
+
+    .content-shell > header,
+    .content-shell > .toc-card,
+    .content-shell > article {
+        @apply mx-auto w-full;
+    }
+
+    .meta-row {
+        @apply flex flex-wrap items-center gap-6 text-[#767676] text-base;
+    }
+
+    .share-link {
+        @apply inline-flex items-center gap-2 bg-transparent p-0 text-[#444444] underline underline-offset-[3px];
+    }
+
+    .project-example {
+        @apply my-6;
+    }
+
+    .project-example-image {
+        @apply w-full max-w-[32rem];
+    }
+
+    .project-example figcaption {
+        @apply mt-3 text-sm;
+    }
+
+    .meta-link {
+        @apply inline-flex items-center gap-2 text-[#767676] no-underline;
+    }
+
+    .toc-card {
+        @apply my-10 rounded-lg border border-zinc-200 bg-white overflow-hidden;
+    }
+
+    .toc-title {
+        @apply flex cursor-pointer items-center justify-between px-4 py-2 text-[1.05rem] font-normal text-black;
+        font-family: "Geist Sans", sans-serif;
+    }
+
+    .toc-card[open] .toc-title {
+        @apply border-b border-zinc-200;
+    }
+
+    .toc-list {
+        @apply px-4 py-3 space-y-2 text-[1.05rem];
+    }
+
+    .toc-item {
+        @apply list-none ml-0;
+    }
+
+    .toc-item a {
+        @apply no-underline text-[#444444] hover:text-black;
+    }
+
+    .toc-child {
+        @apply pl-8 text-[0.98em];
+    }
+
+    .toc-chevron {
+        @apply text-xl leading-none text-[#767676];
+    }
+
+    .toc-card[open] .toc-chevron {
+        @apply rotate-45;
+    }
+}
