@@ -1,0 +1,329 @@
+---
+import { site } from "@/site";
+
+const title = "nsfw";
+const description = "Come on, shake your body baby.";
+const pageUrl = new URL("/nsfw", Astro.site ?? "https://milliyin.dev");
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={pageUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <link rel="icon" href="/ava.jpg" type="image/jpeg" />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #000;
+                font-family: ui-sans-serif, system-ui, sans-serif;
+            }
+
+            body {
+                position: relative;
+            }
+
+            canvas {
+                position: fixed;
+                inset: 0;
+                display: none;
+            }
+
+            /* the "pop in" reveal once audio actually starts playing */
+            canvas.cue-in {
+                display: block;
+                animation: cue-in 0.6s ease-out;
+            }
+
+            @keyframes cue-in {
+                0% {
+                    opacity: 0;
+                    transform: scale(1.42);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                canvas.cue-in {
+                    animation: none;
+                }
+            }
+
+            .overlay {
+                position: fixed;
+                inset: 0;
+                z-index: 10;
+                display: grid;
+                place-items: center;
+                background: #000;
+            }
+
+            .overlay.hidden {
+                display: none;
+            }
+
+            .overlay-inner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button {
+                appearance: none;
+                border: 0;
+                border-radius: 999px;
+                padding: 0.9rem 1.4rem;
+                font: inherit;
+                font-weight: 600;
+                background: #f4a261;
+                color: #111827;
+                cursor: pointer;
+            }
+
+            button:hover {
+                filter: brightness(1.08);
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="scene"></canvas>
+
+        <div class="overlay" id="overlay">
+            <div class="overlay-inner">
+                <button id="launch-button" type="button">Trust me</button>
+            </div>
+        </div>
+
+        <!-- Replace with your own audio file's path -->
+        <audio id="track" src="/dance.mp3" loop preload="auto"></audio>
+
+        <script is:inline>
+            const canvas = document.getElementById("scene");
+            const context = canvas.getContext("2d");
+            const overlay = document.getElementById("overlay");
+            const button = document.getElementById("launch-button");
+            const track = document.getElementById("track");
+
+            const AVATAR_SRC =
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAAAdAgMAAAAWQyy/AAAADFBMVEX///+4YOA4ODj4+PhASPNeAAAAAXRSTlMAQObYZgAAAStJREFUeF6l08FqhEAMBuBhbk6fYyj6Pgmul3pZEN9hWV8i9FgvC3X6PELpe2zP9Y/pyCLLFprLoP83STzo/lv+/ZEoGGwMw10RacmePmML4PfOjyqev6WGKDs/Kth40QiEXInxLPzxle+WHUS8kgoi6vU8zzaobIQB31R4QrU4T9RVKl5ngpheaBP1KlmWLlU4z0iCJioORKxCmzm5nDSJAOx0jxthdEBwzOLIkJyFIEGgQpvVqxSMhVRxQKCiEYhozQtbPV/Fmx6iJE5ErYkWgi8mlOYkEiVZxQRpglUojSZB9wJUTDoxkTeMN4J3ot0JT79CTMifRUmUEtV5803EJcD3+5ScS+MmML+feHBhCcKSWOVvw9s07H+LTdwvL/1Fp9yvaggJUx/WD0e0wREEScedAAAAAElFTkSuQmCC";
+            const FLASH_INTERVAL = 0.4;
+            const POSE_FRAME_DURATION = 0.09;
+            const SPRITE_FRAME_WIDTH = 33;
+            const SPRITE_FRAME_HEIGHT = 29;
+            const SPRITE_FRAME_COUNT = 4;
+
+            const avatar = new Image();
+            avatar.src = AVATAR_SRC;
+
+            let lastTime = 0;
+            let elapsedSinceSpawn = 0;
+            let started = false;
+            let backgroundColor = "#050505";
+            let panelColor = "#0c0c0c";
+            let protagonist = null;
+            let dancers = [];
+
+            function getProtagonistWidth() {
+                return Math.min(canvas.width * 0.78, 620);
+            }
+
+            function getProtagonistHeight(width) {
+                return width * (SPRITE_FRAME_HEIGHT / SPRITE_FRAME_WIDTH);
+            }
+
+            function randomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function randomFloat(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function randomColor() {
+                const hue = Math.floor(Math.random() * 360);
+                return `hsl(${hue}, 75%, 55%)`;
+            }
+
+            function createProtagonist() {
+                const width = getProtagonistWidth();
+
+                return {
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    width,
+                    height: getProtagonistHeight(width),
+                    poseTime: 0,
+                    poseIndex: 0
+                };
+            }
+
+            function createDancer() {
+                const isNearMainDancer = Math.random() < 0.28;
+                const width = isNearMainDancer ? randomInt(340, 520) : randomInt(240, 380);
+                const height = getProtagonistHeight(width);
+                const goingRight = Math.random() < 0.5;
+                const speed = (
+                    isNearMainDancer ? randomInt(520, 980) : randomInt(380, 760)
+                ) * (goingRight ? 1 : -1);
+
+                return {
+                    x: goingRight ? -width : canvas.width + width,
+                    y: randomFloat(0, Math.max(0, canvas.height - height)),
+                    width,
+                    height,
+                    speed,
+                    opacity: randomFloat(0.5, 1),
+                    poseTime: 0,
+                    poseIndex: 0
+                };
+            }
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                if (protagonist) {
+                    protagonist.x = canvas.width / 2;
+                    protagonist.y = canvas.height / 2;
+                    protagonist.width = getProtagonistWidth();
+                    protagonist.height = getProtagonistHeight(protagonist.width);
+                }
+            }
+
+            function drawSprite(entity, opacity = 1) {
+                const frameX = entity.poseIndex * SPRITE_FRAME_WIDTH;
+                const halfWidth = entity.width / 2;
+                const halfHeight = entity.height / 2;
+                context.save();
+                context.globalAlpha = opacity;
+                context.imageSmoothingEnabled = false;
+                context.translate(entity.x - halfWidth, entity.y - halfHeight);
+                context.drawImage(
+                    avatar,
+                    frameX,
+                    0,
+                    SPRITE_FRAME_WIDTH,
+                    SPRITE_FRAME_HEIGHT,
+                    0,
+                    0,
+                    entity.width,
+                    entity.height
+                );
+                context.restore();
+            }
+
+            function updatePose(entity, dt) {
+                entity.poseTime += dt;
+                if (entity.poseTime >= POSE_FRAME_DURATION) {
+                    entity.poseTime = 0;
+                    entity.poseIndex = (entity.poseIndex + 1) % SPRITE_FRAME_COUNT;
+                }
+            }
+
+            function update(dt) {
+                elapsedSinceSpawn += dt;
+
+                if (elapsedSinceSpawn >= FLASH_INTERVAL) {
+                    elapsedSinceSpawn = 0;
+                    backgroundColor = randomColor();
+                    panelColor = randomColor();
+                    dancers.push(createDancer());
+                }
+
+                updatePose(protagonist, dt);
+
+                for (const dancer of dancers) {
+                    updatePose(dancer, dt);
+                    dancer.x += dancer.speed * dt;
+                }
+
+                dancers = dancers.filter(
+                    (dancer) => dancer.x > -dancer.width - 40 && dancer.x < canvas.width + dancer.width + 40
+                );
+            }
+
+            function render() {
+                context.globalAlpha = 1;
+                context.fillStyle = backgroundColor;
+                context.fillRect(0, 0, canvas.width, canvas.height);
+
+                const margin = 28;
+                if (canvas.width > margin * 2 && canvas.height > margin * 2) {
+                    context.fillStyle = panelColor;
+                    context.fillRect(
+                        margin,
+                        margin,
+                        canvas.width - margin * 2,
+                        canvas.height - margin * 2
+                    );
+                }
+
+                for (const dancer of dancers) {
+                    drawSprite(dancer, dancer.opacity);
+                }
+
+                drawSprite(protagonist, 1);
+            }
+
+            function loop(now) {
+                if (!started) return;
+
+                const dt = lastTime ? (now - lastTime) / 1000 : 0;
+                lastTime = now;
+
+                update(dt);
+                render();
+
+                requestAnimationFrame(loop);
+            }
+
+            function launch() {
+                if (started) return;
+                started = true;
+
+                overlay.classList.add("hidden");
+                resize();
+                protagonist = createProtagonist();
+
+                track.currentTime = 0;
+                track
+                    .play()
+                    .then(() => {
+                        canvas.classList.add("cue-in");
+                        canvas.style.display = "block";
+                        document.title = "nsfw";
+                    })
+                    .catch(() => {
+                        // Autoplay can still be blocked post-click in rare cases;
+                        // show the visual anyway so the click wasn't wasted.
+                        canvas.classList.add("cue-in");
+                        canvas.style.display = "block";
+                    });
+
+                requestAnimationFrame(loop);
+            }
+
+            window.addEventListener("resize", resize);
+            button.addEventListener("click", launch);
+            resize();
+        </script>
+    </body>
+</html>
