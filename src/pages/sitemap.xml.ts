@@ -8,7 +8,8 @@ const staticRoutes = [
     "/experience",
     "/education",
     "/certifications",
-    "/blog"
+    "/blog",
+    "/nsfw"
 ];
 
 const toUrlEntry = (path: string, lastmod?: string) => {
