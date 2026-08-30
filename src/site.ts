@@ -9,7 +9,7 @@ export const site = {
         "Portfolio of Milliyin featuring software engineering, AI/ML work, deployed products, and practical full-stack projects.",
     intro:
         "I'm a software engineer and AI/ML builder focused on practical products, reliable deployment systems, and real-world applications of modern AI.",
-    defaultOgImage: "/taskhive-screenshot.png",
+    defaultOgImage: "/og-home.png",
     sections: {
         projects:
             "Selected projects spanning AI agents, deployment systems, and applied machine learning.",
