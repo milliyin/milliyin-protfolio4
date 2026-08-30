@@ -64,19 +64,15 @@ const tiles = [
 
     @media (max-width: 768px) {
         .image-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 2.1fr) minmax(0, 0.95fr);
             grid-template-areas:
-                "wide"
-                "tall"
-                "bottom";
-            grid-template-rows: none;
+                "wide tall"
+                "bottom tall";
+            grid-template-rows: 16rem 6.5rem;
         }
 
-        .feature-wide,
-        .feature-tall,
-        .feature-bottom {
-            min-height: 14rem;
-            height: auto;
+        .feature-wide {
+            height: 100%;
         }
     }
 </style>
