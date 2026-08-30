@@ -1,21 +1,82 @@
 ---
 const tiles = [
-    { title: "Profile", detail: "Add your portrait", className: "row-span-2" },
-    { title: "Project", detail: "Showcase a featured build", className: "" },
-    { title: "Stack", detail: "Highlight your tools", className: "hidden md:block" },
-    { title: "About", detail: "A short personal note", className: "row-span-2" },
-    { title: "Contact", detail: "Email or socials", className: "hidden md:block md:row-span-2" },
-    { title: "Location", detail: "City or country", className: "" }
+    {
+        src: "/WhatsApp Image 2026-08-30 at 6.26.54 PM.jpeg",
+        alt: "Illiyin wearing a helmet standing on a road at dusk",
+        className: "feature-wide"
+    },
+    {
+        src: "/WhatsApp Image 2026-08-30 at 6.32.46 PM.jpeg",
+        alt: "Coding desk setup with multiple monitors",
+        className: "feature-bottom"
+    },
+    {
+        src: "/WhatsApp Image 2026-08-30 at 6.29.39 PM.jpeg",
+        alt: "Illiyin sitting on a bench outdoors",
+        className: "feature-tall"
+    }
 ];
 ---
 
-<section class="grid grid-cols-2 md:grid-cols-3 grid-rows-3 gap-4">
+<section class="image-grid">
     {
         tiles.map((tile) => (
-            <article class={`hero-image card ${tile.className}`}>
-                <h3 class="pt-0">{tile.title}</h3>
-                <p class="faded">{tile.detail}</p>
+            <article class={`hero-image card image-tile overflow-hidden p-0 ${tile.className}`}>
+                <img
+                    src={tile.src}
+                    alt={tile.alt}
+                    loading="lazy"
+                    class="h-full w-full object-cover"
+                />
             </article>
         ))
     }
 </section>
+
+<style>
+    .image-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 3.15fr) minmax(0, 0.8fr);
+        grid-template-areas:
+            "wide tall"
+            "bottom tall";
+        grid-template-rows: 18.5rem 7rem;
+        gap: 1rem;
+    }
+
+    .image-tile {
+        min-height: 0;
+        height: 100%;
+        border-radius: 1.25rem;
+    }
+
+    .feature-wide {
+        grid-area: wide;
+    }
+
+    .feature-tall {
+        grid-area: tall;
+    }
+
+    .feature-bottom {
+        grid-area: bottom;
+    }
+
+    @media (max-width: 768px) {
+        .image-grid {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                "wide"
+                "tall"
+                "bottom";
+            grid-template-rows: none;
+        }
+
+        .feature-wide,
+        .feature-tall,
+        .feature-bottom {
+            min-height: 14rem;
+            height: auto;
+        }
+    }
+</style>

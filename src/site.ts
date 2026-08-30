@@ -8,7 +8,7 @@ export const site = {
     description:
         "Portfolio of Milliyin featuring software engineering, AI/ML work, deployed products, and practical full-stack projects.",
     intro:
-        "I'm a software engineer and AI/ML builder focused on practical products, reliable deployment systems, and real-world applications of modern AI.",
+        "I'm a DevOps-focused software engineer and AI/ML builder focused on practical products, reliable deployment systems, and real-world applications of modern AI.",
     defaultOgImage: "/og-home.png",
     sections: {
         projects:

@@ -102,6 +102,35 @@ const pageUrl = new URL("/nsfw", Astro.site ?? "https://milliyin.dev");
             button:hover {
                 filter: brightness(1.08);
             }
+
+            .skip-button {
+                position: fixed;
+                right: 1rem;
+                bottom: 1rem;
+                z-index: 20;
+                appearance: none;
+                border: 0;
+                background: rgba(0, 0, 0, 0.38);
+                color: rgba(255, 255, 255, 0.72);
+                font-size: 0.98rem;
+                font-weight: 600;
+                padding: 0.7rem 1rem;
+                border-radius: 999px;
+                cursor: pointer;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s ease, background 0.2s ease, color 0.2s ease;
+            }
+
+            .skip-button.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .skip-button:hover {
+                background: rgba(0, 0, 0, 0.56);
+                color: rgba(255, 255, 255, 0.92);
+            }
         </style>
     </head>
     <body>
@@ -115,6 +144,7 @@ const pageUrl = new URL("/nsfw", Astro.site ?? "https://milliyin.dev");
 
         <!-- Replace with your own audio file's path -->
         <audio id="track" src="/dance.mp3" loop preload="auto"></audio>
+        <button id="skip-button" class="skip-button" type="button">Skip</button>
 
         <script is:inline>
             const canvas = document.getElementById("scene");
@@ -122,6 +152,7 @@ const pageUrl = new URL("/nsfw", Astro.site ?? "https://milliyin.dev");
             const overlay = document.getElementById("overlay");
             const button = document.getElementById("launch-button");
             const track = document.getElementById("track");
+            const skipButton = document.getElementById("skip-button");
 
             const AVATAR_SRC =
                 "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAAAdAgMAAAAWQyy/AAAADFBMVEX///+4YOA4ODj4+PhASPNeAAAAAXRSTlMAQObYZgAAAStJREFUeF6l08FqhEAMBuBhbk6fYyj6Pgmul3pZEN9hWV8i9FgvC3X6PELpe2zP9Y/pyCLLFprLoP83STzo/lv+/ZEoGGwMw10RacmePmML4PfOjyqev6WGKDs/Kth40QiEXInxLPzxle+WHUS8kgoi6vU8zzaobIQB31R4QrU4T9RVKl5ngpheaBP1KlmWLlU4z0iCJioORKxCmzm5nDSJAOx0jxthdEBwzOLIkJyFIEGgQpvVqxSMhVRxQKCiEYhozQtbPV/Fmx6iJE5ErYkWgi8mlOYkEiVZxQRpglUojSZB9wJUTDoxkTeMN4J3ot0JT79CTMifRUmUEtV5803EJcD3+5ScS+MmML+feHBhCcKSWOVvw9s07H+LTdwvL/1Fp9yvaggJUx/WD0e0wREEScedAAAAAElFTkSuQmCC";
@@ -141,6 +172,7 @@ const pageUrl = new URL("/nsfw", Astro.site ?? "https://milliyin.dev");
             let panelColor = "#0c0c0c";
             let protagonist = null;
             let dancers = [];
+            let skipTimer = null;
 
             function getProtagonistWidth() {
                 return Math.min(canvas.width * 0.78, 620);
@@ -318,11 +350,22 @@ const pageUrl = new URL("/nsfw", Astro.site ?? "https://milliyin.dev");
                         canvas.style.display = "block";
                     });
 
+                if (skipTimer) {
+                    window.clearTimeout(skipTimer);
+                }
+
+                skipTimer = window.setTimeout(() => {
+                    skipButton.classList.add("visible");
+                }, 5000);
+
                 requestAnimationFrame(loop);
             }
 
             window.addEventListener("resize", resize);
             button.addEventListener("click", launch);
+            skipButton.addEventListener("click", () => {
+                window.location.href = "https://milliyin.dev/";
+            });
             resize();
         </script>
     </body>
