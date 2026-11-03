@@ -5,6 +5,7 @@ createdAt: 2026-11-03
 updatedAt: 2026-11-03
 category: Cloud Security
 readingTime: 13 min read
+heroImage: /blog/why-vercel-uses-app-not-com-og.png
 ---
 
 Deploy a project on Vercel and it immediately receives a URL like `my-project.vercel.app`. Yet Vercel's dashboard, login, billing, and API live on `vercel.com`.
