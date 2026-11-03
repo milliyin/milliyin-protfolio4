@@ -54,9 +54,15 @@ const publishedLabel = post.data.createdAt.toLocaleDateString("en-US", {
         </div>
     </header>
     <TableOfContents headings={headings} />
-    <article class="space-y-6 content">
+    <article class:list={["space-y-6 content", post.id === "why-vercel-uses-app-not-com" && "case-study"]}>
         <Content />
     </article>
+    <dialog class="image-lightbox" data-image-lightbox aria-label="Expanded image view">
+        <button class="image-lightbox-close" type="button" data-image-lightbox-close aria-label="Close expanded image">
+            Close
+        </button>
+        <img data-image-lightbox-image alt="" />
+    </dialog>
     <script is:inline>
         const shareButton = document.querySelector("[data-share-url]");
         if (shareButton instanceof HTMLButtonElement) {
@@ -87,5 +93,51 @@ const publishedLabel = post.data.createdAt.toLocaleDateString("en-US", {
                 }
             });
         }
+
+        const setupImageLightbox = () => {
+            const lightbox = document.querySelector("[data-image-lightbox]");
+            const expandedImage = lightbox?.querySelector("[data-image-lightbox-image]");
+            const closeButton = lightbox?.querySelector("[data-image-lightbox-close]");
+
+            if (!(lightbox instanceof HTMLDialogElement) || !(expandedImage instanceof HTMLImageElement)) return;
+
+            document.querySelectorAll("article.content img").forEach((image) => {
+                if (!(image instanceof HTMLImageElement) || image.dataset.lightboxReady) return;
+
+                image.dataset.lightboxReady = "true";
+                image.tabIndex = 0;
+                image.setAttribute("role", "button");
+                image.setAttribute("aria-label", `${image.alt || "Article image"}. Open full-size view`);
+
+                const openImage = () => {
+                    expandedImage.src = image.currentSrc || image.src;
+                    expandedImage.alt = image.alt;
+                    lightbox.showModal();
+                };
+
+                image.addEventListener("click", openImage);
+                image.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        openImage();
+                    }
+                });
+            });
+
+            if (!lightbox.dataset.controlsReady) {
+                lightbox.dataset.controlsReady = "true";
+                closeButton?.addEventListener("click", () => lightbox.close());
+                lightbox.addEventListener("click", (event) => {
+                    if (event.target === lightbox) lightbox.close();
+                });
+                lightbox.addEventListener("close", () => {
+                    expandedImage.removeAttribute("src");
+                    expandedImage.alt = "";
+                });
+            }
+        };
+
+        setupImageLightbox();
+        document.addEventListener("astro:page-load", setupImageLightbox);
     </script>
 </ContentLayout>
