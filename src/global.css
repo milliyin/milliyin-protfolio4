@@ -285,4 +285,88 @@
     .case-study table th {
         @apply bg-blue-50 font-semibold text-blue-950;
     }
+
+    @media (max-width: 640px) {
+        .content-shell {
+            width: calc(100% - 2rem);
+        }
+
+        .content {
+            @apply text-base leading-7;
+            overflow-wrap: anywhere;
+        }
+
+        .content-shell > header {
+            @apply mt-8;
+        }
+
+        .content-shell > header h1 {
+            @apply text-[2rem] leading-[1.05];
+        }
+
+        .meta-row {
+            @apply gap-x-4 gap-y-2 text-sm;
+        }
+
+        .toc-card {
+            @apply my-7;
+        }
+
+        .case-study > h2 {
+            @apply mt-10 px-3 py-3 text-[1.55rem] leading-tight;
+        }
+
+        .case-study > h3 {
+            @apply text-[1.25rem] leading-snug;
+        }
+
+        .case-study > img[src^="/d2/"] {
+            @apply my-6 p-1;
+        }
+
+        .case-study table,
+        .case-study table tbody,
+        .case-study table tr,
+        .case-study table td {
+            @apply block w-full;
+        }
+
+        .case-study table {
+            @apply space-y-3;
+        }
+
+        .case-study table thead {
+            @apply sr-only;
+        }
+
+        .case-study table tr {
+            @apply overflow-hidden rounded-lg border border-zinc-200 bg-white;
+        }
+
+        .case-study table td {
+            @apply grid grid-cols-[6.75rem_minmax(0,1fr)] gap-3 border-0 border-b border-zinc-200 px-3 py-2.5 text-left leading-6;
+        }
+
+        .case-study table td:last-child {
+            @apply border-b-0;
+        }
+
+        .case-study table td::before {
+            @apply font-semibold text-zinc-700;
+        }
+
+        .case-study table:nth-of-type(1) td:nth-child(1)::before { content: "Model"; }
+        .case-study table:nth-of-type(1) td:nth-child(2)::before { content: "Example"; }
+        .case-study table:nth-of-type(1) td:nth-child(3)::before { content: "Relationship"; }
+        .case-study table:nth-of-type(1) td:nth-child(4)::before { content: "Main risk"; }
+
+        .case-study table:nth-of-type(2) td:nth-child(1)::before { content: "Pair"; }
+        .case-study table:nth-of-type(2) td:nth-child(2)::before { content: "Same origin?"; }
+        .case-study table:nth-of-type(2) td:nth-child(3)::before { content: "Same site?"; }
+
+        .case-study table:nth-of-type(3) td:nth-child(1)::before { content: "Platform"; }
+        .case-study table:nth-of-type(3) td:nth-child(2)::before { content: "Trusted domain"; }
+        .case-study table:nth-of-type(3) td:nth-child(3)::before { content: "User content"; }
+        .case-study table:nth-of-type(3) td:nth-child(4)::before { content: "What happened"; }
+    }
 }
