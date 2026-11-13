@@ -19,6 +19,10 @@ const publishedLabel = post.data.createdAt.toLocaleDateString("en-US", {
     day: "numeric",
     year: "numeric"
 });
+const caseStudyIds = new Set([
+    "why-vercel-uses-app-not-com",
+    "inside-the-proxy-economy"
+]);
 ---
 
 <ContentLayout
@@ -54,7 +58,12 @@ const publishedLabel = post.data.createdAt.toLocaleDateString("en-US", {
         </div>
     </header>
     <TableOfContents headings={headings} />
-    <article class:list={["space-y-6 content", post.id === "why-vercel-uses-app-not-com" && "case-study"]}>
+    <article class:list={[
+        "space-y-6 content",
+        caseStudyIds.has(post.id) && "case-study",
+        post.id === "why-vercel-uses-app-not-com" && "vercel-case-study",
+        post.id === "inside-the-proxy-economy" && "proxy-case-study"
+    ]}>
         <Content />
     </article>
     <dialog class="image-lightbox" data-image-lightbox aria-label="Expanded image view">

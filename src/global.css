@@ -286,6 +286,14 @@
         @apply bg-blue-50 font-semibold text-blue-950;
     }
 
+    .proxy-case-study > blockquote:nth-of-type(odd) {
+        @apply border-amber-200 bg-amber-50 text-amber-950;
+    }
+
+    .proxy-case-study > blockquote:nth-of-type(even) {
+        @apply border-sky-200 bg-sky-50 text-sky-950;
+    }
+
     @media (max-width: 640px) {
         .content-shell {
             width: calc(100% - 2rem);
@@ -355,18 +363,18 @@
             @apply font-semibold text-zinc-700;
         }
 
-        .case-study table:nth-of-type(1) td:nth-child(1)::before { content: "Model"; }
-        .case-study table:nth-of-type(1) td:nth-child(2)::before { content: "Example"; }
-        .case-study table:nth-of-type(1) td:nth-child(3)::before { content: "Relationship"; }
-        .case-study table:nth-of-type(1) td:nth-child(4)::before { content: "Main risk"; }
+        .vercel-case-study table:nth-of-type(1) td:nth-child(1)::before { content: "Model"; }
+        .vercel-case-study table:nth-of-type(1) td:nth-child(2)::before { content: "Example"; }
+        .vercel-case-study table:nth-of-type(1) td:nth-child(3)::before { content: "Relationship"; }
+        .vercel-case-study table:nth-of-type(1) td:nth-child(4)::before { content: "Main risk"; }
 
-        .case-study table:nth-of-type(2) td:nth-child(1)::before { content: "Pair"; }
-        .case-study table:nth-of-type(2) td:nth-child(2)::before { content: "Same origin?"; }
-        .case-study table:nth-of-type(2) td:nth-child(3)::before { content: "Same site?"; }
+        .vercel-case-study table:nth-of-type(2) td:nth-child(1)::before { content: "Pair"; }
+        .vercel-case-study table:nth-of-type(2) td:nth-child(2)::before { content: "Same origin?"; }
+        .vercel-case-study table:nth-of-type(2) td:nth-child(3)::before { content: "Same site?"; }
 
-        .case-study table:nth-of-type(3) td:nth-child(1)::before { content: "Platform"; }
-        .case-study table:nth-of-type(3) td:nth-child(2)::before { content: "Trusted domain"; }
-        .case-study table:nth-of-type(3) td:nth-child(3)::before { content: "User content"; }
-        .case-study table:nth-of-type(3) td:nth-child(4)::before { content: "What happened"; }
+        .vercel-case-study table:nth-of-type(3) td:nth-child(1)::before { content: "Platform"; }
+        .vercel-case-study table:nth-of-type(3) td:nth-child(2)::before { content: "Trusted domain"; }
+        .vercel-case-study table:nth-of-type(3) td:nth-child(3)::before { content: "User content"; }
+        .vercel-case-study table:nth-of-type(3) td:nth-child(4)::before { content: "What happened"; }
     }
 }
