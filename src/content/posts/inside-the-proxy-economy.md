@@ -5,6 +5,7 @@ createdAt: 2026-11-14
 updatedAt: 2026-11-14
 category: DevOps & Data Engineering
 readingTime: 18 min read
+heroImage: /blog/inside-the-proxy-economy-og.png
 tags:
   - DevOps
   - Distributed Systems
