@@ -1,6 +1,6 @@
 ---
-title: Gradio Frontend Without Exposing Model Weights
-description: A secure architecture for serving AI models via Gradio without leaking model weights or internal logic.
+title: Secure Gradio Model Deployment Without Exposing Weights
+description: A secure Gradio deployment architecture using a separate inference API and queue to protect model weights, control workloads, and scale safely.
 createdAt: 2025-08-15
 updatedAt: 2025-08-15
 category: AI Deployment
@@ -14,7 +14,7 @@ tags:
   - Security
 ---
 
-## Introduction
+## Secure Gradio Deployment Architecture
 
 When deploying machine learning models on the web, it's often essential to keep model weights private, especially when dealing with proprietary or large models such as diffusion generators or segmentation systems. This post shows how I built a Gradio frontend that talks to a secure backend API while hiding the model logic and weights from users.
 
@@ -124,3 +124,9 @@ This setup is a strong fit for:
 ## Conclusion
 
 By separating the Gradio interface from the model backend and implementing a queue, I built a flow that is more secure, more scalable, and easier to operate. The key idea is simple: Gradio does not need to be monolithic. It can work as a lightweight frontend in front of a hardened inference service.
+
+## Related Engineering Work
+
+- [Build an interactive SAM 2 segmentation interface with Gradio](/blog/sam2-image-segmentation)
+- [Explore the AI caption generator inference server](/projects/ai-caption-generator-server)
+- [See the queue, retry, and idempotency patterns behind reliable workers](/blog/inside-the-proxy-economy)

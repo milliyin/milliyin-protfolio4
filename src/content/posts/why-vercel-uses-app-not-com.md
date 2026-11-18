@@ -1,6 +1,6 @@
 ---
 title: Why Vercel Uses .app for Your Projects, Not .com
-description: A security case study explaining why Vercel separates its control plane at vercel.com from user deployments at vercel.app.
+description: "Why Vercel uses vercel.app for deployments: a browser security case study covering origins, sites, cookies, SameSite, the Public Suffix List, and blast radius."
 createdAt: 2026-11-03
 updatedAt: 2026-11-03
 category: Cloud Security
@@ -469,6 +469,12 @@ A domain is not just a label at the edge of a system. In a browser, it is part o
 That is what makes this design so compelling. Millions of developers can press **Deploy**, share what they built, and move on with their day. Behind that simple action is a boundary chosen before an incident forced the lesson: creative freedom belongs on one side, and the trust people place in their accounts belongs safely on the other.
 
 > **The best outcome is deliberately uneventful:** a malicious deployment remains only a malicious deployment. It does not become a stolen session, a compromised dashboard, or a reason for every honest project to lose trust.
+
+## Related Engineering Work
+
+- [Design an Azure staging architecture with secure CI/CD](/blog/azure-staging-architecture-venu-ai)
+- [Engineer reliable web data pipelines with bounded retries](/blog/inside-the-proxy-economy)
+- [Review my cloud and DevOps experience](/experience)
 
 ## Sources and Further Reading
 

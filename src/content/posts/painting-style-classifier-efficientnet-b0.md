@@ -1,6 +1,6 @@
 ---
 title: EfficientNet Painting Style Detection Guide
-description: How I fine-tuned EfficientNet-B0 on a painting dataset to classify artistic styles with high accuracy.
+description: A practical EfficientNet-B0 painting style classification guide covering transfer learning, augmentation, fine-tuning, evaluation, and model improvements.
 createdAt: 2025-08-15
 updatedAt: 2025-08-15
 category: Computer Vision
@@ -14,7 +14,7 @@ tags:
   - EfficientNet
 ---
 
-## Introduction
+## EfficientNet Painting Style Classification
 
 I fine-tuned **EfficientNet-B0** to classify artworks into **9 painting styles** using the Hugging Face dataset `keremberke/painting-style-classification`. The goal was to build a complete custom PyTorch pipeline covering dataset preparation, augmentation, transfer learning, and evaluation so I could better understand what helps and what limits accuracy on this task.
 
@@ -114,3 +114,9 @@ Complete training pipeline, dataset processing, and fine-tuning notebook:
 ## Conclusion
 
 This project gave me a practical look at fine-grained image classification for paintings. A baseline around 60 percent was useful, but the real value came from seeing exactly where augmentation, backbone size, and layer-unfreezing strategy can move the model further.
+
+## Related Engineering Work
+
+- [Build zero-shot image segmentation with SAM 2 and Gradio](/blog/sam2-image-segmentation)
+- [Explore the FLUX.1 LoRA training workflow](/projects/flux-1-in-context-learning)
+- [Browse more applied AI and computer vision projects](/projects)

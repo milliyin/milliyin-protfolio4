@@ -1,6 +1,6 @@
 ---
 title: "Inside the Proxy Economy: Engineering Web Data at Scale"
-description: A DevOps case study exploring the hidden infrastructure behind web data pipelines, from fragile scripts to reliable distributed systems with queues, idempotency, observability, and cost controls.
+description: A web data pipeline architecture case study covering proxies, queues, rate limits, retries, idempotency, observability, durable storage, and cost controls.
 createdAt: 2026-11-14
 updatedAt: 2026-11-14
 category: DevOps & Data Engineering
@@ -757,6 +757,12 @@ At small scale, one loop can hide missing state, missing budgets, and missing fa
 The production path is less dramatic and far more effective: obtain permission, minimize the data, admit work through a global budget, preserve sessions, classify errors, make jobs idempotent, store artifacts durably, observe everything, and stop safely when the system loses confidence.
 
 > **The goal is not to "beat" the upstream service. The goal is to build a pipeline both teams could inspect without surprises.**
+
+## Related Engineering Work
+
+- [Design an Azure staging architecture with CI/CD and managed services](/blog/azure-staging-architecture-venu-ai)
+- [Understand why Vercel isolates user deployments on vercel.app](/blog/why-vercel-uses-app-not-com)
+- [Build a secure Gradio inference service with queue control](/blog/gradio-secure-api-queue)
 
 ## Sources and Further Reading
 

@@ -1,13 +1,13 @@
 ---
-title: Designing an Azure Staging Architecture for Venu AI
-description: How I designed and deployed a staging architecture on Azure using CI/CD, PostgreSQL, Redis, Blob Storage, and identity-based security for Venu AI.
+title: Azure Staging Architecture with CI/CD for Venu AI
+description: A practical Azure staging architecture using CI/CD, PostgreSQL, Redis, Blob Storage, managed identity, and independently deployable services.
 createdAt: 2026-08-30
 updatedAt: 2026-08-30
 category: Cloud Architecture
 readingTime: 4 min read
 ---
 
-## Overview
+## Azure Staging Architecture Overview
 
 I recently designed and deployed an Azure staging architecture for Venu AI to make testing and releases more reliable before production.
 
@@ -96,3 +96,9 @@ The most useful lesson was seeing how system design concepts work together in pr
 Redis caching makes more sense when you see how it improves real request flow. Separate services become easier to appreciate when you deploy and manage them independently. Identity-based authentication feels much more valuable when it replaces fragile secret-sharing patterns.
 
 This project made Azure architecture feel less abstract to me. It turned ideas like CI/CD, service separation, secure identity, and managed data systems into something concrete that I had to design, deploy, and think through end to end.
+
+## Related Engineering Work
+
+- [Why Vercel isolates untrusted deployments on a separate domain](/blog/why-vercel-uses-app-not-com)
+- [How reliable distributed workers, queues, and retries fit together](/blog/inside-the-proxy-economy)
+- [Browse my deployed software and AI projects](/projects)

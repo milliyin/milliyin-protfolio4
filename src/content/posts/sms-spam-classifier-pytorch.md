@@ -1,6 +1,6 @@
 ---
 title: Building an SMS Spam Classifier with PyTorch
-description: Step-by-step guide to training a binary SMS spam classifier using PyTorch and a Hugging Face tokenizer.
+description: A PyTorch SMS spam classifier tutorial covering text preprocessing, tokenization, binary model training, evaluation, and reusable inference.
 createdAt: 2025-07-17
 updatedAt: 2025-07-17
 category: NLP
@@ -14,7 +14,7 @@ tags:
   - Machine Learning
 ---
 
-## Introduction
+## PyTorch SMS Spam Classification
 
 I recently built a simple **SMS spam classifier** using **PyTorch**, **Scikit-learn**, and the Hugging Face `sms_spam` dataset. This project focused on training a logistic-regression-style neural network to detect whether an SMS message is spam or ham with high accuracy.
 
@@ -116,3 +116,9 @@ Complete code, training, and inference scripts:
 ## Conclusion
 
 This SMS spam classification project deepened my understanding of NLP preprocessing, PyTorch model training, and practical deployment pipelines. Projects like this help bridge the gap between theory and real model-building workflows.
+
+## Related Engineering Work
+
+- [Deploy AI models securely behind a Gradio frontend](/blog/gradio-secure-api-queue)
+- [Explore the fine-tuned prompt improvement model](/projects/bad-to-improved-prompt-model)
+- [Browse more applied AI projects](/projects)

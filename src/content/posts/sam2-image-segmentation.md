@@ -1,6 +1,6 @@
 ---
 title: SAM 2 Image Segmentation Guide with Gradio
-description: Hands-on exploration of Meta's SAM 2 model for zero-shot image segmentation, wrapped in a Gradio interface.
+description: A SAM 2 image segmentation guide showing how to extract point prompts, generate zero-shot masks, and build an interactive Gradio interface.
 createdAt: 2025-03-16
 updatedAt: 2025-03-16
 category: Computer Vision
@@ -130,3 +130,9 @@ By integrating SAM 2 with Gradio and leveraging NumPy-based processing, I stream
 The combination of SAM 2's zero-shot capability and Gradio's rapid UI deployment is powerful. You can build a working segmentation tool in under 100 lines of code that handles arbitrary objects without any fine-tuning.
 
 If you want to see more of my applied AI work beyond this experiment, browse the full [AI projects and case studies](/projects) collection.
+
+## Related Engineering Work
+
+- [Deploy Gradio without exposing model weights](/blog/gradio-secure-api-queue)
+- [Fine-tune EfficientNet for painting style classification](/blog/painting-style-classifier-efficientnet-b0)
+- [Explore the AI caption generator inference server](/projects/ai-caption-generator-server)

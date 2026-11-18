@@ -2,13 +2,19 @@ export const site = {
     name: "Milliyin",
     shortName: "M",
     fullName: "Milliyin",
-    role: "Software Engineer and AI/ML Builder",
+    role: "DevOps Engineer and AI/ML Builder",
     domain: "milliyin.dev",
-    title: "Milliyin | Software Engineer and AI/ML Builder",
+    title: "Milliyin | DevOps Engineer and AI/ML Builder",
     description:
-        "Portfolio of Milliyin featuring software engineering, AI/ML work, deployed products, and practical full-stack projects.",
+        "DevOps engineer and AI/ML builder creating reliable cloud deployments, CI/CD systems, distributed services, and practical AI products.",
     intro:
-        "I'm a DevOps-focused software engineer and AI/ML builder focused on practical products, reliable deployment systems, and real-world applications of modern AI.",
+        "I design reliable cloud deployments, CI/CD systems, and production-minded AI products. My work connects DevOps, distributed systems, and applied machine learning.",
+    profiles: [
+        "https://github.com/milliyin",
+        "https://www.linkedin.com/in/illiyin/",
+        "https://huggingface.co/milliyin",
+        "https://dev.to/milliyin"
+    ],
     defaultOgImage: "/og-home.png",
     sections: {
         projects:

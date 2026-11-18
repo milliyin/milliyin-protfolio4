@@ -1,0 +1,29 @@
+# Milliyin
+
+> DevOps engineer and AI/ML builder creating reliable cloud deployments, CI/CD systems, distributed services, and practical AI products.
+
+## Primary pages
+
+- [Home](https://milliyin.dev/): Professional profile, selected work, skills, and experience.
+- [Experience](https://milliyin.dev/experience): DevOps, software engineering, and AI/ML experience.
+- [Projects](https://milliyin.dev/projects): Applied AI, cloud deployment, and software projects.
+- [Technical writing](https://milliyin.dev/blog): Engineering case studies and implementation guides.
+
+## Selected engineering case studies
+
+- [Azure staging architecture and CI/CD](https://milliyin.dev/blog/azure-staging-architecture-venu-ai)
+- [Why Vercel isolates deployments on vercel.app](https://milliyin.dev/blog/why-vercel-uses-app-not-com)
+- [Engineering reliable web data pipelines](https://milliyin.dev/blog/inside-the-proxy-economy)
+- [Secure Gradio model deployment](https://milliyin.dev/blog/gradio-secure-api-queue)
+- [Autonomous AI trading agent architecture](https://milliyin.dev/blog/sentinel-autonomous-trading-agent)
+
+## Verified profiles
+
+- [GitHub](https://github.com/milliyin)
+- [LinkedIn](https://www.linkedin.com/in/illiyin/)
+- [Hugging Face](https://huggingface.co/milliyin)
+- [DEV Community](https://dev.to/milliyin)
+
+## Contact
+
+- Email: illiyindesigns@gmail.com

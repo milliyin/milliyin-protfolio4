@@ -1,6 +1,6 @@
 ---
-title: Building an Autonomous AI Trading Agent
-description: How I built Sentinel, an autonomous on-chain trading agent with a 6-stage governance pipeline, adaptive learning, AI reflection, and a tamper-proof IPFS audit trail on Ethereum Sepolia.
+title: Autonomous AI Trading Agent Architecture with Governance
+description: How I built an autonomous AI trading agent with a six-stage governance pipeline, adaptive reflection, trust-based sizing, and an IPFS audit trail.
 createdAt: 2026-04-21
 updatedAt: 2026-04-21
 category: AI Agents
@@ -162,3 +162,9 @@ TypeScript, Node.js, ethers.js v6, Express, React, Kraken REST, Pinata IPFS, Gro
 **Dashboard:** [sentinel-v3-production.up.railway.app](https://sentinel-v3-production.up.railway.app)
 
 If you want to see more of my production-minded AI builds, browse the full [AI projects and case studies](/projects) collection.
+
+## Related Engineering Work
+
+- [Explore TaskHive, an open-source AI agent marketplace](/projects/taskhive)
+- [See reliability patterns for queues, retries, and idempotent workers](/blog/inside-the-proxy-economy)
+- [Review my software engineering and AI experience](/experience)
